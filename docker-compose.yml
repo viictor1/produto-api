@@ -1,0 +1,25 @@
+services:
+  postgres-db:
+    image: postgres
+    container_name: postgres-db
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${DATABASE}
+      - POSTGRES_USER=${USER}
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_PORT=${PORT}
+
+  app:
+    build:
+      context: .
+    container_name: produto-api
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres-db
+
+volumes:
+  db:
