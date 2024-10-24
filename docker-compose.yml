@@ -1,20 +1,33 @@
 
 services:
+  app:
+      build:
+        context: .
+      restart: always
+      container_name: produto-api        
+      ports:
+        - "3000:3000"      
+      depends_on:
+        db:
+          condition: service_healthy
+      networks:
+        - app-network
   db:
     image: postgres
-    restart: always
     container_name: db
     environment:
-      POSTGRES_DB: ${DATABASE}
-      POSTGRES_USER: ${USER}
-      POSTGRES_PASSWORD: ${PASSWORD}
-
-  app:
-    build:
-      context: .
-    restart: always
-    container_name: produto-api        
+      POSTGRES_DB: 'produto-api'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
     ports:
-      - "3000:3000"      
-    depends_on:
-      - db        
+      - "5432:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app-network:
