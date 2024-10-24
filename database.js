@@ -30,6 +30,26 @@ const createTable = async () => {
     }
   };
 
+const seedData = async () => {
+    const insertQuery = `
+      INSERT INTO produto (descricao, preco, quantidade) VALUES
+      ('Cadeira', 1.99, 100),
+      ('Pedra', 5.99, 50),
+      ('Agua', 4.99, 30),
+      ('Leite', 1.99, 130),
+      ('Air Fryer', 10.99, 25)
+      ON CONFLICT (descricao) DO NOTHING; -- Prevents duplicate entries
+    `;
+  
+    try {
+      await pool.query(insertQuery);
+      console.log("Dados inseridos com sucesso na tabela 'produto'.");
+    } catch (error) {
+      console.error("Erro inserindo dados:", error);
+    }
+}
+
 createTable();
+seedData();
 
 module.exports = pool;
