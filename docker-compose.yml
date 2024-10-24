@@ -1,7 +1,8 @@
 services:
-  postgres-db:
+  db:
     image: postgres
-    container_name: postgres-db
+    restart: always
+    container_name: db
     volumes:
       - db:/var/lib/postgresql/data
     ports:
@@ -10,16 +11,16 @@ services:
       - POSTGRES_DB=${DATABASE}
       - POSTGRES_USER=${USER}
       - POSTGRES_PASSWORD=${PASSWORD}
-      - POSTGRES_PORT=${PORT}
 
   app:
     build:
       context: .
+    restart: always
     container_name: produto-api
     ports:
       - 3000:3000
     depends_on:
-      - postgres-db
+      - db
 
 volumes:
   db:
