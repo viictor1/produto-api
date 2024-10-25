@@ -18,7 +18,18 @@ const getProdutoById = async (req, res) =>{
     return res.status(200).json(response);
 }
 
+const createProduto = async (req, res) =>{
+    const produto = req.body;
+
+    const response = await produtoRepository.createProduto(produto);
+    if(response.error){
+        return res.status(500).json({ error: response.error});
+    }
+    return res.status(200).json(response);
+}
+
 module.exports = {
     getAllProdutos,
-    getProdutoById
+    getProdutoById,
+    createProduto
 };
