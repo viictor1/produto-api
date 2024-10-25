@@ -28,8 +28,30 @@ const createProduto = async (req, res) =>{
     return res.status(200).json(response);
 }
 
+const updateProduto = async (req, res) =>{
+    const produto = req.body;
+
+    const response = await produtoRepository.updateProduto(produto);
+    if(response.error){
+        return res.status(500).json({ error: response.error});
+    }
+    return res.status(200).json(response);
+}
+
+const deleteProduto = async (req, res) =>{
+    const { id } = req.params
+
+    const response = await produtoRepository.deleteProduto(id);
+    if(response.error){
+        return res.status(500).json({ error: response.error});
+    }
+    return res.status(200).json(response);
+}
+
 module.exports = {
     getAllProdutos,
     getProdutoById,
-    createProduto
+    createProduto,
+    updateProduto,
+    deleteProduto
 };

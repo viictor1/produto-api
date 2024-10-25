@@ -29,8 +29,36 @@ const createProduto = async (produto) => {
     }
 };
 
+const updateProduto = async (produto) => {
+    try {
+        const result = await pool.query(`
+            UPDATE PRODUTO 
+            SET DESCRICAO = $1, PRECO = $2, QUANTIDADE = $3 
+            WHERE ID = $4 
+            RETURNING *
+        `, [produto.descricao, produto.preco, produto.quantidade, produto.id]);
+        return result.rows;
+    } catch (error) {
+        return { error: error.message };
+    }
+};
+
+const deleteProduto = async (id) => {
+    try {
+        const result = await pool.query(`
+            DELETE FROM produto WHERE ID = $1
+        `, [id]);
+        return result.rows;
+    } catch (error) {
+        return { error: error.message };
+    }
+};
+
+
 module.exports = {
     getAllProdutos,
     getProdutoById,
-    createProduto
+    createProduto,
+    updateProduto,
+    deleteProduto
 };
