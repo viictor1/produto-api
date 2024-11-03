@@ -21,8 +21,8 @@ const getProdutoById = async (id) => {
 const createProduto = async (produto) => {
     try {
         const result = await pool.query(`
-            INSERT INTO PRODUTO (DESCRICAO, PRECO, ESTOQUE) VALUES ($1, $2, $3) RETURNING *
-        `, [produto.descricao, produto.preco, produto.estoque]);
+            INSERT INTO PRODUTO (DESCRICAO, PRECO, ESTOQUE, DATA) VALUES ($1, $2, $3, $4) RETURNING *
+        `, [produto.descricao, produto.preco, produto.estoque, produto.data]);
         return result.rows[0];
     } catch (error) {
         return { error: error.message };
@@ -30,13 +30,14 @@ const createProduto = async (produto) => {
 };
 
 const updateProduto = async (produto) => {
+    console.log(produto)
     try {
         const result = await pool.query(`
             UPDATE PRODUTO 
-            SET DESCRICAO = $1, PRECO = $2, ESTOQUE = $3 
-            WHERE ID = $4 
+            SET DESCRICAO = $1, PRECO = $2, ESTOQUE = $3, DATA = $4
+            WHERE ID = $5
             RETURNING *
-        `, [produto.descricao, produto.preco, produto.estoque, produto.id]);
+        `, [produto.descricao, produto.preco, produto.estoque, produto.data, produto.id]);
         return result.rows[0];
     } catch (error) {
         return { error: error.message };
