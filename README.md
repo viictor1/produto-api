@@ -7,15 +7,15 @@ Aplicação backend composta por um CRUD de produtos para a matéria de Desenvol
 ## Como rodar a aplicação
 1. Instale ou clone o repositório:
 ```console
-$ git clone https://github.com/viictor1/produto-api.git
+ git clone https://github.com/viictor1/produto-api.git
 ```
 2. Acesse a pasta do projeto
 ```console
-$ cd produto-api
+ cd produto-api
 ```
 3. Utilize o comando:
 ```console
-$ docker compose up --build
+ docker compose up --build
 ```
 
 ## Tecnologias Utilizadas
