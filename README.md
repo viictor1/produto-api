@@ -15,7 +15,7 @@ $ cd produto-api
 ```
 3. Utilize o comando:
 ```console
-$ docker-compose up --build
+$ docker compose up --build
 ```
 
 ## Tecnologias Utilizadas
